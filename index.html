@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda To-Do</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Agenda</h1>
+    <div class="inputs-container">
+        <input id="tarefa" type="text" placeholder="Tarefa">
+        <input id="seleciona-data" type="date">
+        <select id="prioridade">
+            <option value="Baixa">Baixa</option>
+            <option value="Média">Média</option>
+            <option value="Urgente">Urgente</option>
+        </select>
+        <button onclick="adicionarTarefa()">Adicionar Tarefa</button>
+    </div>
+    <div id="lista-de-tarefas"></div>
+
+    <script>
+        // Modelagem
+        let afazeres = JSON.parse(localStorage.getItem("afazeres")) || [];
+
+        const salvarTarefas = () => localStorage.setItem("afazeres", JSON.stringify(afazeres));
+
+        // Visualização
+        const renderizar = () => {
+            const lista = document.getElementById("lista-de-tarefas");
+            lista.innerHTML = `
+                <div class="cabecalho">
+                    <span class="col-tarefa">Tarefa</span>
+                    <span class="col-data">Data Limite</span>
+                    <span class="col-prioridade">Prioridade</span>
+                    <span class="col-status">Status</span>
+                    <span class="col-acoes">Ações</span>
+                </div>
+            `;
+
+            afazeres.forEach((tarefa) => {
+                const linha = document.createElement("div");
+                linha.className = "linha";
+                linha.innerHTML = `
+                    <span class="col-tarefa">${tarefa.nome}</span>
+                    <span class="col-data">${tarefa.data}</span>
+                    <span class="col-prioridade ${tarefa.prioridade.toLowerCase()}">${tarefa.prioridade}</span>
+                    <span class="col-status">${tarefa.data < new Date().toISOString().split("T")[0] ? "Atrasada" : "Em dia"}</span>
+                `;
+
+                const botao = document.createElement("button");
+                botao.innerText = "Apagar";
+                botao.onclick = () => apagarTarefa(tarefa.id);
+                linha.appendChild(botao);
+
+                lista.appendChild(linha);
+            });
+        };
+
+        // Controle
+        const adicionarTarefa = () => {
+            const campoTarefa = document.getElementById("tarefa");
+            const campoData = document.getElementById("seleciona-data");
+            const campoPrioridade = document.getElementById("prioridade");
+
+            if (!campoTarefa.value || !campoData.value) {
+                alert("Preencha pelo menos a tarefa e a data!");
+                return;
+            }
+
+            const novaTarefa = {
+                id: Date.now().toString(),
+                nome: campoTarefa.value,
+                data: campoData.value,
+                prioridade: campoPrioridade.value
+            };
+
+            afazeres.push(novaTarefa);
+            salvarTarefas();
+            renderizar();
+
+            campoTarefa.value = "";
+            campoData.value = "";
+            campoPrioridade.value = "Baixa";
+        };
+
+        const apagarTarefa = (id) => {
+            afazeres = afazeres.filter((t) => t.id !== id);
+            salvarTarefas();
+            renderizar();
+        };
+
+        renderizar();
+    </script>
+</body>
+</html>

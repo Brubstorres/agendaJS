@@ -1,0 +1,135 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #cdcafc;
+  margin: 20px;
+  color: black;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Inputs e botão */
+.inputs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+input, select, button {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid black;
+  font-size: 14px;
+}
+
+button {
+  background-color: #9012c2;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #642099;
+}
+
+/* Lista de tarefas estilo tabela/agenda */
+#lista-de-tarefas {
+  border: 1px solid white;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 14px;
+  display: grid;
+}
+
+/* Cabeçalho */
+.cabecalho {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr auto; /* colunas: Tarefa | Data | Prioridade | Status | Ações */
+  background-color: white;
+  font-weight: bold;
+  padding: 12px;
+  border-bottom: 2px solid black;
+  text-align: center;
+}
+
+/* Linhas de tarefas */
+.linha {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr auto;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid black;
+  background-color: white;
+}
+
+/* Linhas alternadas */
+.linha:nth-child(even) {
+  background-color: white;
+}
+
+/* Hover */
+.linha:hover {
+  background-color: #ad08f91b;
+}
+
+/* Separadores verticais */
+.cabecalho span,
+.linha span {
+  border-right: 1px solid black;
+  padding: 0 5px;
+}
+
+.cabecalho span:last-child,
+.linha span:last-child {
+  border-right: none;
+}
+
+/* Prioridade com cores */
+.col-prioridade {
+  font-weight: bold;
+  text-align: center;
+}
+
+.col-prioridade.urgente {
+  color: #ff0000;
+}
+
+.col-prioridade.média {
+  color: #ff9d00;
+}
+
+.col-prioridade.baixa {
+  color: #00cd0e;
+}
+
+/* Status */
+.col-status {
+  text-align: center;
+}
+
+/* Botão apagar */
+.linha button {
+  background-color: #fc0303;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  justify-self: center;
+}
+
+.linha button:hover {
+  background-color: #981607;
+}
+
+/* Ajuste para textos longos */
+.linha span {
+  overflow-wrap: break-word;
+}
